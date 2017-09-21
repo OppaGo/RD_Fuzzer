@@ -1,0 +1,12 @@
+##############################################################################
+# FUZZ CAMPAIGN SETTINGS
+##############################################################################
+orig_path: C:\Users\Tribal\Documents\Visual Studio 2015\Projects\Fuzzer_Framework_Git\Fuzzer_Framework\original
+mutated_path: C:\Users\Tribal\Documents\Visual Studio 2015\Projects\Fuzzer_Framework_Git\Fuzzer_Framework\mutated
+result_path: C:\Program Files (x86)
+
+target_program: C:\WINDOWS\system32\notepad.exe
+
+crash: 10
+timeout: 5
+dummy_size: 1000
