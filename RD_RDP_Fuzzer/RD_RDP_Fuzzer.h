@@ -1,4 +1,5 @@
 #pragma once
+/* RD_RDP_Fuzzer Source Code is based on rdesktop Source Code. */
 
 #ifdef RD_RDP_FUZZER_EXPORTS
 #define RD_RDP_FUZZER_API __declspec(dllexport)

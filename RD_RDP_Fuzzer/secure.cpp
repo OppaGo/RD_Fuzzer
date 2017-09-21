@@ -829,7 +829,7 @@ namespace RD_FUZZER
 		sec_out_mcs_data(&mcs_data);
 
 		s = mcs_reconnect(server, &mcs_data);
-		sec_process_mcs_data(s);
+		sec_process_mcs_data(s);			// please check
 		if (!s_check_end(s))
 			goto error;
 

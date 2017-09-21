@@ -13,6 +13,7 @@
 #endif
 
 #include "rdesktop.h"
+#include "mutator.h"
 
 #ifdef _WIN32
 #define socklen_t int
@@ -37,7 +38,8 @@
 
 namespace RD_FUZZER
 {
-	class RDP_TCP {
+	class RDP_TCP
+	{
 	private:
 		SOCKET sock;
 		struct stream in_stream;
@@ -46,6 +48,7 @@ namespace RD_FUZZER
 	protected:
 		char server[64];
 		int tcp_port_rdp;
+		Mutator mutator;
 
 	public:
 		RDP_TCP();

@@ -238,6 +238,7 @@ namespace RD_FUZZER
 
 			s = sec_init(sec_flags, 18 + len_domain + len_user + len_password
 				+ len_program + len_directory + 10);
+			// MaxLen + 각 hdrlen의 data를 가진 stream 반환(Mutator를 돌리기 위한 충분한 크기)
 
 			out_uint32(s, 0);
 			out_uint32_le(s, flags);
@@ -254,7 +255,6 @@ namespace RD_FUZZER
 		}
 		else
 		{
-
 			flags |= RDP_LOGON_BLOB;
 			DEBUG_RDP5(("Sending RDP5-style Logon packet\n"));
 			packetlen = 4 +	/* Unknown uint32 */
@@ -360,10 +360,18 @@ namespace RD_FUZZER
 			out_uint32_le(s, 0xfffffffe);
 			out_uint32_le(s, rdp5_performanceflags);
 			out_uint16(s, 0);
-
-
 		}
 		s_mark_end(s);
+		
+		
+		//printf("Begin Address : %p\n", s->data);
+		//printf("End Address : %p\n", s->end);
+		//printf("End - Begin : %x, Size : %x\n", s->end - s->data, s->size);
+		//hexdump(s->data, s->size);
+		
+		mutator.Mutation((char*)s->data, s->size - mutator.GetMaxDummySize());	// Packet Mutator
+		//printf("After Mutator\n");
+		//hexdump(s->data, s->size);
 		sec_send(s, sec_flags);
 	}
 
@@ -1627,11 +1635,11 @@ namespace RD_FUZZER
 
 	void RDP::rdp_support_redirect()
 	{
-		STRNCPY(server, redirect_server, sizeof(server));
+		//STRNCPY(server, redirect_server, sizeof(server));
 		flags |= RDP_LOGON_AUTO;
-		STRNCPY(domain, redirect_domain, sizeof(domain));
-		STRNCPY(username, redirect_username, sizeof(username));
-		STRNCPY(password, redirect_password, sizeof(password));
+		//STRNCPY(domain, redirect_domain, sizeof(domain));
+		//STRNCPY(username, redirect_username, sizeof(username));
+		//STRNCPY(password, redirect_password, sizeof(password));
 	
 		redirect = False;
 	}

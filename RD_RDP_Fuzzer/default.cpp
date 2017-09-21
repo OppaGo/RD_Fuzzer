@@ -45,7 +45,7 @@ namespace RD_FUZZER
 	{
 		va_list ap;
 
-		fprintf(stderr, "ERROR: ");
+		fprintf(stderr, "[-] ERROR: ");
 
 		va_start(ap, format);
 		vfprintf(stderr, format, ap);
@@ -58,7 +58,7 @@ namespace RD_FUZZER
 	{
 		va_list ap;
 
-		fprintf(stderr, "WARNING: ");
+		fprintf(stderr, "[-] WARNING: ");
 
 		va_start(ap, format);
 		vfprintf(stderr, format, ap);

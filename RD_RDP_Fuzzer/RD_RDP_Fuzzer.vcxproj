@@ -151,7 +151,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
+    <ClInclude Include="cryptohash.h" />
     <ClInclude Include="mcs.h" />
+    <ClInclude Include="mutator.h" />
     <ClInclude Include="parse.h" />
     <ClInclude Include="proto.h" />
     <ClInclude Include="rdesktop.h" />
@@ -167,12 +169,14 @@
     <ClCompile Include="default.cpp" />
     <ClCompile Include="iso.cpp" />
     <ClCompile Include="licence.cpp" />
+    <ClCompile Include="mutator.cpp" />
     <ClCompile Include="RD_RDP_Fuzzer.cpp" />
     <ClCompile Include="mcs.cpp" />
     <ClCompile Include="rdp.cpp" />
     <ClCompile Include="rdp_tcp.cpp" />
     <ClCompile Include="secure.cpp" />
     <ClCompile Include="ssl.cpp" />
+    <ClCompile Include="wellrandom.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

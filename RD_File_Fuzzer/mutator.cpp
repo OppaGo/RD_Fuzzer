@@ -66,6 +66,13 @@ namespace RD_FUZZER
 		return(true);
 	}
 
+	bool Mutator::Init_Mutator_config(const std::string & orig_path, const std::string & mutated_path, dword dummy_size_max)
+	{
+		this->orig_path = orig_path;
+		this->mutated_path = mutated_path;
+		this->dummy_size_max = dummy_size_max;
+	}
+
 	/*
 	*	is_mutator_config()
 	*	is_config ¹ÝÈ¯
@@ -149,6 +156,24 @@ namespace RD_FUZZER
 			return WELLRANDOMLONG2(max);
 		}
 	}
+
+	 dword Mutator::GenRandomValue_extern(dword max)
+	 {
+		 random_device rd;
+		 mt19937 engine(rd());
+		 uniform_int_distribution<int> distribution(0, max);
+		 auto generator = bind(distribution, engine);
+		 unsigned int init[16];
+		 for (int i = 0; i < 16; i++)
+			 init[i] = generator();
+		 InitWELLRNG512a(init);
+		 try {
+			 return WELLRANDOMLONG(max);
+		 }
+		 catch (const std::exception e) {
+			 return WELLRANDOMLONG2(max);
+		 }
+	 }
 
 	/*
 	*	Byte_flipping()

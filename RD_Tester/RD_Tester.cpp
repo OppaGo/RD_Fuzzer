@@ -9,13 +9,14 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
-
+	
 	if (argc != 2) {
 		fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1)]\n", argv[0]);
 		return(-1);
 	}
 
-	if (atoi(argv[1]) == FileFormat) {
+	unsigned int select = /* RDPNetwork; */atoi(argv[1]);
+	if (select == FileFormat) {
 		void* (*pOpenFunc)(const char*);
 		bool(*pFuzzFunc)(void*);
 		void(*pCloseFunc)(void*);
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]) {
 		}
 		(*pCloseFunc)(Fuzzer_Handle);
 	}
-	else if (atoi(argv[1]) == RDPNetwork)
+	else if (select == RDPNetwork)
 	{
 		void* (*pOpenFunc)(const char*);
 		int(*pFuzzFunc)(void*, DWORD);
@@ -55,7 +56,7 @@ int main(int argc, char* argv[]) {
 		if (hInstDLL == NULL)
 		{
 			fprintf(stderr, "LoadLibrary Error\n");
-			printf("Error Code : %u\n", GetLastError());
+			printf("[-] Error Code : %u\n", GetLastError());
 			return(-1);
 		}
 
@@ -77,7 +78,7 @@ int main(int argc, char* argv[]) {
 		(*pCloseFunc)(Fuzzer_Handle);
 	}
 	else {
-		fprintf(stderr, "Not yet Supported.\n");
+		fprintf(stderr, "[-] Not yet Supported.\n");
 		return(-1);
 	}
 

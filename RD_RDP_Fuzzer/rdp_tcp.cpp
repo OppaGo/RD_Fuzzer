@@ -81,10 +81,12 @@ namespace RD_FUZZER
 		result = &out_stream[cur_stream_id];
 		cur_stream_id = (cur_stream_id + 1) % STREAM_COUNT;
 
-		if (maxlen > result->size)
+		mutator.SetMaxDummySize(4096);
+
+		if (maxlen + mutator.GetMaxDummySize() > result->size)
 		{
-			result->data = (uint8 *)xrealloc(result->data, maxlen);
-			result->size = maxlen;
+			result->data = (uint8 *)xrealloc(result->data, maxlen + mutator.GetMaxDummySize());
+			result->size = maxlen  + mutator.GetMaxDummySize();
 		}
 
 		result->p = result->data;
