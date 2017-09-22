@@ -157,23 +157,23 @@ namespace RD_FUZZER
 		}
 	}
 
-	 dword Mutator::GenRandomValue_extern(dword max)
-	 {
-		 random_device rd;
-		 mt19937 engine(rd());
-		 uniform_int_distribution<int> distribution(0, max);
-		 auto generator = bind(distribution, engine);
-		 unsigned int init[16];
-		 for (int i = 0; i < 16; i++)
-			 init[i] = generator();
-		 InitWELLRNG512a(init);
-		 try {
-			 return WELLRANDOMLONG(max);
-		 }
-		 catch (const std::exception e) {
-			 return WELLRANDOMLONG2(max);
-		 }
-	 }
+	dword Mutator::GenRandomValue_extern(dword max)
+	{
+		random_device rd;
+		mt19937 engine(rd());
+		uniform_int_distribution<int> distribution(0, max);
+		auto generator = bind(distribution, engine);
+		unsigned int init[16];
+		for (int i = 0; i < 16; i++)
+			init[i] = generator();
+		InitWELLRNG512a(init);
+		try {
+			return WELLRANDOMLONG(max);
+		}
+		catch (const std::exception e) {
+			return WELLRANDOMLONG2(max);
+		}
+	}
 
 	/*
 	*	Byte_flipping()
@@ -181,6 +181,13 @@ namespace RD_FUZZER
 	*/
 	void Mutator::Byte_flipping(char* data, const dword dsize) {
 		dword offset = GenRandomValue(dsize);
+		BYTE  reverse_case = (BYTE)GenRandomValue(0x100);
+		data[offset] ^= reverse_case;
+	}
+
+	void Mutator::Byte_flipping_in_range(char * data, const dword begin, const dword end)
+	{
+		dword offset = begin + GenRandomValue(end - begin);
 		BYTE  reverse_case = (BYTE)GenRandomValue(0x100);
 		data[offset] ^= reverse_case;
 	}
@@ -207,16 +214,59 @@ namespace RD_FUZZER
 	 */
 	dword Mutator::Mutation(char* data, const dword dsize) {
 		bool mutation_switch;	// true, false
-		dword dummy_total_len = GenRandomValue(dummy_size_max);
-		for (dword i = 0; i < dummy_total_len; i++) {
+		dword mutation_count = GenRandomValue(dummy_size_max);
+		dword dummy_total_len = 0;
+		for (dword i = 0; i < mutation_count; i++) {
 			mutation_switch = ((BYTE)GenRandomValue(2) == 1) ? true : false;
-			if (mutation_switch)
-				Byte_flipping(data, dsize);
-			else
-				Dummy_injection(data, dsize);
+			if (mutation_switch) {
+				Byte_flipping(data, dsize + dummy_total_len);
+			}
+			else {
+				Dummy_injection(data, dsize + dummy_total_len);
+				dummy_total_len++;
+			}
 		}
 
 		return(dsize + dummy_total_len);
+	}
+
+	dword Mutator::Mutation_in_max(char * data, const dword dsize, const dword maxsize)
+	{
+		bool mutation_switch;	// true, false
+		dword mutation_count = GenRandomValue(maxsize - dsize);
+		dword dummy_total_len = 0;
+		for (dword i = 0; i < mutation_count; i++) {
+			mutation_switch = ((BYTE)GenRandomValue(2) == 1) ? true : false;
+			if (mutation_switch) {
+				Byte_flipping(data, dsize + dummy_total_len);
+			}
+			else {
+				Dummy_injection(data, dsize + dummy_total_len);
+				dummy_total_len++;
+			}
+		}
+
+		return(dsize + dummy_total_len);
+	}
+
+	dword Mutator::Mutation_in_range(char * data, const dword begin, const dword end)
+	{
+		dword mutation_count = GenRandomValue(end - begin);
+		for (dword i = 0; i < mutation_count; i++) {
+			Byte_flipping_in_range(data, begin, end);
+		}
+
+		return(mutation_count);
+	}
+
+	void Mutator::SetMaxDummySize(dword max)
+	{
+		dummy_size_max = max;
+	}
+
+	dword Mutator::GetMaxDummySize(void)
+	{
+		return dummy_size_max;
 	}
 
 	/*

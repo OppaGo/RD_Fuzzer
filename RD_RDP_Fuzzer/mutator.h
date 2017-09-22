@@ -15,6 +15,7 @@ namespace RD_FUZZER
 
 	private:
 		void Byte_flipping(char* data, const dword dsize);
+		void Byte_flipping_in_range(char* data, const dword begin, const dword end);
 		void Dummy_injection(char* data, const dword dsize);
 
 	protected:
@@ -39,6 +40,8 @@ namespace RD_FUZZER
 		dword GenRandomValue(dword max);
 		static dword GenRandomValue_extern(dword max);
 		dword Mutation(char* data, const dword dsize);
+		dword Mutation_in_max(char* data, const dword dsize, const dword maxsize);
+		dword Mutation_in_range(char* data, const dword begin, const dword end);
 		void SetMaxDummySize(dword max);
 		dword GetMaxDummySize(void);
 	};
