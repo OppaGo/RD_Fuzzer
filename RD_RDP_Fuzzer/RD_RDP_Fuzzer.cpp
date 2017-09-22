@@ -1,5 +1,6 @@
 #include "RD_RDP_Fuzzer.h"
 
+
 void print_disconnect_reason(uint16 reason)	// 연결 해제 이유
 {
 	char *text;
@@ -126,7 +127,7 @@ extern "C" RD_RDP_FUZZER_API RD_BOOL RDPFuzzing(PRDPFuzzer prdp, dword fuzztime)
 	RD_BOOL deactivated;
 	uint32 ext_disc_reason = 0;
 
-	while (run_count < 2 && continue_connect)	/* add support for Session Directory; only reconnect once */
+	while (/* run_count < 2 && */continue_connect)	/* add support for Session Directory; only reconnect once */
 	{
 		if (run_count == 0)
 		{

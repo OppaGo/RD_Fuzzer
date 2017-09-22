@@ -5,13 +5,7 @@
   wellrandom.cpp
      C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_File_Fuzzer.lib 라이브러리 및 C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_File_Fuzzer.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  48 of 1370 functions ( 3.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    55 functions had inline decision re-evaluated but remain unchanged
+  All 1370 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   코드를 생성했습니다.
-file_fuzzer.obj : warning LNK4020: 'c:\users\tribal\documents\visual studio 2015\projects\rd_fuzzer\rd_file_fuzzer\release\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-mutator.obj : warning LNK4020: 'c:\users\tribal\documents\visual studio 2015\projects\rd_fuzzer\rd_file_fuzzer\release\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-RD_File_Fuzzer.obj : warning LNK4020: 'c:\users\tribal\documents\visual studio 2015\projects\rd_fuzzer\rd_file_fuzzer\release\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-wellrandom.obj : warning LNK4020: 'c:\users\tribal\documents\visual studio 2015\projects\rd_fuzzer\rd_file_fuzzer\release\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
   RD_File_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_File_Fuzzer.dll
   RD_File_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_File_Fuzzer.pdb (Full PDB)

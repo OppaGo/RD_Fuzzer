@@ -15,7 +15,8 @@ extern "C" {
 		void warning(char *format, ...);
 		void unimpl(char *format, ...);
 		void hexdump(unsigned char *p, unsigned int len);
-		void print_disconnect_reason(uint16 reason);
+		void write_hexdump(unsigned char *p, unsigned int len, const char* filename);
+		//void print_disconnect_reason(uint16 reason);
 	}
 /* *INDENT-OFF* */
 #ifdef __cplusplus

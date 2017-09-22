@@ -81,7 +81,7 @@ namespace RD_FUZZER
 		result = &out_stream[cur_stream_id];
 		cur_stream_id = (cur_stream_id + 1) % STREAM_COUNT;
 
-		mutator.SetMaxDummySize(4096);
+		mutator.SetMaxDummySize(512);
 
 		if (maxlen + mutator.GetMaxDummySize() > result->size)
 		{

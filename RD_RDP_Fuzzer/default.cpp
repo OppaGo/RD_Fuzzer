@@ -106,4 +106,34 @@ namespace RD_FUZZER
 			line += thisline;
 		}
 	}
+
+	void
+		write_hexdump(unsigned char *p, unsigned int len, const char* filename)
+	{
+		unsigned char *line = p;
+		unsigned int i, thisline, offset = 0;
+		FILE* fp;
+		fopen_s(&fp, filename, "wt");
+		
+		while (offset < len)
+		{
+			fprintf_s(fp, "%04x ", offset);
+			thisline = len - offset;
+			if (thisline > 16)
+				thisline = 16;
+
+			for (i = 0; i < thisline; i++)
+				fprintf_s(fp, "%02x ", line[i]);
+
+			for (; i < 16; i++)
+				fprintf_s(fp, "   ");
+
+			for (i = 0; i < thisline; i++)
+				fprintf_s(fp, "%c", (line[i] >= 0x20 && line[i] < 0x7f) ? line[i] : '.');
+
+			fprintf_s(fp, "\n");
+			offset += thisline;
+			line += thisline;
+		}
+	}
 }

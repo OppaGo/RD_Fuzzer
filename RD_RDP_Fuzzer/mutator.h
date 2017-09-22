@@ -8,6 +8,23 @@ typedef unsigned long dword;
 
 namespace RD_FUZZER
 {
+	class Logger
+	{
+	private:
+		dword lognum;
+		std::string filename;
+		FILE* fp;
+		std::string logpath;
+
+	public:
+		std::string SetFileName(std::string& fname);
+		std::string SetLogPath(std::string& path);
+		bool OpenLogFile();
+		dword WriteLog(const char* log, dword log_len);
+		void CloseLogFile();
+		static bool Logging(std::string& path, const char* log, dword log_len);
+	};
+
 	class Mutator
 	{
 	private:
@@ -31,6 +48,8 @@ namespace RD_FUZZER
 		virtual dword GetFileList();
 
 	public:
+		Logger logger;
+
 		Mutator();
 		Mutator(const char* config_file);
 		~Mutator();

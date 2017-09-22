@@ -97,7 +97,9 @@ namespace RD_FUZZER
 
 		bool isconfigured;
 
-	protected:
+		dword session_count;
+
+	private:
 		void rdp5_process(STREAM s);
 		/* Receive an RDP packet */
 		STREAM rdp_recv(uint8 * type);

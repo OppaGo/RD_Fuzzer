@@ -35,6 +35,8 @@ namespace RD_FUZZER
 		memset(redirect_username, 0, 64);
 		memset(redirect_cookie, 0, 128);
 		redirect_flags = 0;
+
+		session_count = 0;
 	}
 
 	RDP::~RDP()
@@ -213,6 +215,16 @@ namespace RD_FUZZER
 		out_uint8(s, 0);	/* compress_type */
 		out_uint16(s, 0);	/* compress_len */
 
+#ifdef RDP_FUZZ
+		//mutator.Mutation_in_max((char*)s->data, s->size - mutator.GetMaxDummySize(), s->size);
+		printf("rdp_send_data\n");
+		std::string filename = "rdp_fuzz_" + std::to_string(session_count);
+		write_hexdump(s->data, s->size, filename.c_str());
+		
+#else
+		printf("sending packets\n");
+#endif
+
 		sec_send(s, encryption ? SEC_ENCRYPT : 0);
 	}
 
@@ -363,15 +375,16 @@ namespace RD_FUZZER
 		}
 		s_mark_end(s);
 		
-		
+#ifdef RDP_FUZZ1
 		//printf("Begin Address : %p\n", s->data);
 		//printf("End Address : %p\n", s->end);
 		//printf("End - Begin : %x, Size : %x\n", s->end - s->data, s->size);
 		//hexdump(s->data, s->size);
 		
-		mutator.Mutation((char*)s->data, s->size - mutator.GetMaxDummySize());	// Packet Mutator
-		//printf("After Mutator\n");
-		//hexdump(s->data, s->size);
+		mutator.Mutation_in_max((char*)s->data, s->size - mutator.GetMaxDummySize(), s->size);	// Packet Mutator
+		printf("RDP_Logon Fuzz\n");
+		hexdump(s->data, s->size);
+#endif
 		sec_send(s, sec_flags);
 	}
 
@@ -1237,6 +1250,7 @@ namespace RD_FUZZER
 			return False;
 
 		rdp_send_logon_info(flags, domain, username, password, command, directory);
+		session_count++;
 		return True;
 	}
 
