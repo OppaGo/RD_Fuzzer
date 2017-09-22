@@ -50,8 +50,8 @@ namespace RD_FUZZER
 	public:
 		Logger logger;
 
-		Mutator();
-		Mutator(const char* config_file);
+		//Mutator();
+		//Mutator(const char* config_file);
 		~Mutator();
 		bool Init_Mutator_config(const char* config_file);
 		bool Init_Mutator_config(const std::string& orig_path, const std::string& mutated_path, dword dummy_size_max);
