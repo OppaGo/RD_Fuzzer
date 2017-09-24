@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RD_File_Fuzzer", "RD_File_F
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RD_RDP_Fuzzer", "RD_RDP_Fuzzer\RD_RDP_Fuzzer.vcxproj", "{FE10E034-4AC5-4270-8821-863DB69FF854}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RD_Sniff_Network_Fuzzer", "RD_Sniff_Network_Fuzzer\RD_Sniff_Network_Fuzzer.vcxproj", "{7560A9AB-6FA1-4F42-9B8F-B8D9B617DFC8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RD_Net_Fuzzer", "RD_Net_Fuzzer\RD_Net_Fuzzer.vcxproj", "{892E6EC9-E578-4E07-B283-60C6F590CA92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RD_Sniffer", "RD_Sniffer\RD_Sniff_Network_Fuzzer.vcxproj", "{7560A9AB-6FA1-4F42-9B8F-B8D9B617DFC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,14 @@ Global
 		{FE10E034-4AC5-4270-8821-863DB69FF854}.Release|x64.Build.0 = Release|x64
 		{FE10E034-4AC5-4270-8821-863DB69FF854}.Release|x86.ActiveCfg = Release|Win32
 		{FE10E034-4AC5-4270-8821-863DB69FF854}.Release|x86.Build.0 = Release|Win32
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Debug|x64.ActiveCfg = Debug|x64
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Debug|x64.Build.0 = Debug|x64
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Debug|x86.ActiveCfg = Debug|Win32
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Debug|x86.Build.0 = Debug|Win32
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Release|x64.ActiveCfg = Release|x64
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Release|x64.Build.0 = Release|x64
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Release|x86.ActiveCfg = Release|Win32
+		{892E6EC9-E578-4E07-B283-60C6F590CA92}.Release|x86.Build.0 = Release|Win32
 		{7560A9AB-6FA1-4F42-9B8F-B8D9B617DFC8}.Debug|x64.ActiveCfg = Debug|x64
 		{7560A9AB-6FA1-4F42-9B8F-B8D9B617DFC8}.Debug|x64.Build.0 = Debug|x64
 		{7560A9AB-6FA1-4F42-9B8F-B8D9B617DFC8}.Debug|x86.ActiveCfg = Debug|Win32

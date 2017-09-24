@@ -1,5 +1,6 @@
 #include "secure.h"
 
+
 namespace RD_FUZZER
 {
 	VCHANNEL * RDP_SEC::channel_register(char * name, uint32 flags, void(*callback)(STREAM))

@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <string>
 
+
 typedef unsigned long dword;
 
 namespace RD_FUZZER

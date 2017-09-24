@@ -1,5 +1,6 @@
 #include "mutator.h"
 
+
 namespace RD_FUZZER
 {
 	std::string Logger::SetFileName(std::string& fname)

@@ -1,5 +1,6 @@
 #include "rdesktop.h"
 
+
 namespace RD_FUZZER
 {
 	/* malloc; exit if out of memory */

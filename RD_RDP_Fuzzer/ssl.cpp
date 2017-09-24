@@ -1,6 +1,7 @@
 #include "ssl.h"
 #include <cstring>
 
+
 namespace RD_FUZZER
 {
 	void RDP_SSL::reverse(uint8 * p, int len)

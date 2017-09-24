@@ -1,5 +1,6 @@
 #include "RD_File_Fuzzer.h"
 
+
 extern "C" RD_FILE_FUZZER_API PFileFuzzer OpenFileFuzzer(const char * config_file)
 {
 	RD_FUZZER::File_Fuzzer* file_fuzzer = new RD_FUZZER::File_Fuzzer(config_file);

@@ -7,6 +7,7 @@
 
 #pragma once
 
+
 #include <Windows.h>
 #include <WinCrypt.h>
 #pragma comment(lib, "Advapi32.lib")

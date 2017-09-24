@@ -5,6 +5,7 @@
 #include "debugger.h"
 #include "mutator.h"
 
+
 namespace RD_FUZZER
 {
 	class File_Fuzzer : public Debugger, Mutator

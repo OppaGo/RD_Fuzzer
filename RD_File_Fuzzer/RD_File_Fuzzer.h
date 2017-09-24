@@ -1,5 +1,6 @@
 #pragma once
 
+
 #ifdef RD_FILE_FUZZER_EXPORTS
 #define RD_FILE_FUZZER_API __declspec(dllexport)
 #else

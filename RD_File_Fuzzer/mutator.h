@@ -6,6 +6,7 @@
 
 typedef unsigned long dword;
 
+
 namespace RD_FUZZER
 {
 	class Mutator

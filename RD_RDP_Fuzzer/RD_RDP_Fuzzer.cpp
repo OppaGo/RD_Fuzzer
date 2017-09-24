@@ -1,6 +1,7 @@
 #include "RD_RDP_Fuzzer.h"
 
 
+
 void print_disconnect_reason(uint16 reason)	// 연결 해제 이유
 {
 	char *text;

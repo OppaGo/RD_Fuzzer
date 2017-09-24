@@ -1,5 +1,6 @@
 #include "secure.h"
 
+
 namespace RD_FUZZER
 {
 	void RDP_SEC::licence_generate_keys(uint8 * client_random, uint8 * server_random, uint8 * pre_master_secret)

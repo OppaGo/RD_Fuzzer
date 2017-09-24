@@ -1,6 +1,7 @@
 #include "secure.h"
 #include "ssl.h"
 
+
 namespace RD_FUZZER
 {
 	RDP_SEC::RDP_SEC() : RDP_MCS()
