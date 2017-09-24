@@ -1,19 +1,14 @@
 ﻿  RD_RDP_Fuzzer.cpp
   channel.cpp
-  iso.cpp
   licence.cpp
-  logger.cpp
-  mcs.cpp
-  mutator.cpp
   rdp.cpp
-  rdp_tcp.cpp
   secure.cpp
-  wellrandom.cpp
+  ssl.cpp
      C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_RDP_Fuzzer.lib 라이브러리 및 C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_RDP_Fuzzer.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  10 of 1361 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+  0 of 1362 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    50 functions had inline decision re-evaluated but remain unchanged
+    12 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   RD_RDP_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_RDP_Fuzzer.dll
   RD_RDP_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_RDP_Fuzzer.pdb (Full PDB)

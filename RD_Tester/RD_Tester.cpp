@@ -6,12 +6,13 @@ using namespace std;
 
 #define FileFormat 0
 #define RDPNetwork 1
+#define SniffNetwork 2
 int main(int argc, char* argv[]) {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
 	
 	if (argc != 2) {
-		fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1)]\n", argv[0]);
+		fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1) | SniffNetwork(2)]\n", argv[0]);
 		return(-1);
 	}
 
@@ -63,6 +64,39 @@ int main(int argc, char* argv[]) {
 		pOpenFunc = (void* (*)(const char*))GetProcAddress(hInstDLL, "OpenRDPFuzzer");
 		pFuzzFunc = (int (*)(void*, DWORD))GetProcAddress(hInstDLL, "RDPFuzzing");
 		pCloseFunc = (void (*)(void*))GetProcAddress(hInstDLL, "CloseRDPFuzzer");
+
+		if (pOpenFunc == NULL ||
+			pFuzzFunc == NULL ||
+			pCloseFunc == NULL)
+		{
+			goto Exit_Label;
+		}
+
+		Fuzzer_Handle = (*pOpenFunc)("./config.yaml");
+		if (!pFuzzFunc(Fuzzer_Handle, 1)) {
+			fprintf(stderr, "[-] RDP Fuzzing Error\n");
+		}
+		(*pCloseFunc)(Fuzzer_Handle);
+	}
+	else if (select == SniffNetwork)
+	{
+		fprintf(stderr, "[-] Not yet Supported.\n");
+		fprintf(stderr, "[+] Just a minute.\n");
+		void* (*pOpenFunc)(const char*);
+		int(*pFuzzFunc)(void*, DWORD);
+		void(*pCloseFunc)(void*);
+
+		hInstDLL = LoadLibrary("RD_Sniff_Network_Fuzzer.dll");
+		if (hInstDLL == NULL)
+		{
+			fprintf(stderr, "LoadLibrary Error\n");
+			printf("[-] Error Code : %u\n", GetLastError());
+			return(-1);
+		}
+
+		pOpenFunc = (void* (*)(const char*))GetProcAddress(hInstDLL, "OpenRDPFuzzer");
+		pFuzzFunc = (int(*)(void*, DWORD))GetProcAddress(hInstDLL, "RDPFuzzing");
+		pCloseFunc = (void(*)(void*))GetProcAddress(hInstDLL, "CloseRDPFuzzer");
 
 		if (pOpenFunc == NULL ||
 			pFuzzFunc == NULL ||

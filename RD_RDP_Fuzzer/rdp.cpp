@@ -216,7 +216,7 @@ namespace RD_FUZZER
 		out_uint16(s, 0);	/* compress_len */
 
 #ifdef RDP_FUZZ
-		//mutator.Mutation_in_max((char*)s->data, s->size - mutator.GetMaxDummySize(), s->size);
+		mutator.Mutation_in_max((char*)s->data, s->size, s->size + mutator.GetMaxDummySize());
 		printf("rdp_send_data\n");
 		std::string filename = "rdp_fuzz_" + std::to_string(session_count);
 		write_hexdump(s->data, s->size, filename.c_str());

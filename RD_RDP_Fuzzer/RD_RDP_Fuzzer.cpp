@@ -97,7 +97,7 @@ void print_disconnect_reason(uint16 reason)	// 연결 해제 이유
 			text = "[-] Unknown reason";
 		}
 	}
-	fprintf(stderr, "[+] disconnect: %s.\n", text);
+	fprintf(stderr, "[+] disconnect: \n%s.\n", text);
 }
 
 extern "C" RD_RDP_FUZZER_API PRDPFuzzer OpenRDPFuzzer(const char * config_file)
@@ -161,11 +161,12 @@ extern "C" RD_RDP_FUZZER_API RD_BOOL RDPFuzzing(PRDPFuzzer prdp, dword fuzztime)
 			rdp->rdp_reset_state();
 			rdp->rdp_support_redirect();
 		}
+		/*
 		else
 		{
 			continue_connect = False;
 			break;
-		}
+		}*/
 
 		run_count++;
 	}
