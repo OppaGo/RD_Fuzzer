@@ -1,0 +1,9 @@
+##############################################################################
+# PACKET SNIFFING SETTINGS(Not Supported)
+#
+# timeout : time for timer(seconds)
+# max_packet_num : Maximum number of packet
+##############################################################################
+
+timeout: 5
+max_packet_num: 1000

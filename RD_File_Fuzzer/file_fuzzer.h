@@ -16,8 +16,12 @@ namespace RD_FUZZER
 		dword test_count;
 		bool isconfigured;
 
+		bool FileFuzzing(const std::string &mutated_full_path, const std::string &mutated_file);	//for Thread
+		virtual bool Store_Crash(const std::string &mutated_full_path, const std::string &mutated_file);
+
 	protected:
 		std::string result_path;
+
 		virtual dword DebugStart();
 
 	public:
@@ -26,10 +30,8 @@ namespace RD_FUZZER
 		bool is_config();
 #define SET_ALL		  1
 #define SET_ONLY_THIS 0
-		bool Init_config(const char* config_file = "./config.yaml", bool flag = SET_ALL);
+		bool Init_config(const char* config_file = "./RD_File_Fuzzer.yaml", bool flag = SET_ALL);
 		bool File_Fuzzer_Loop();
-		bool FileFuzzing(const std::string &mutated_full_path, const std::string &mutated_file);	//for Thread
-		virtual bool Store_Crash(const std::string &mutated_full_path, const std::string &mutated_file);
 		//static void CALLBACK TimeProc(HWND hwnd, UINT uMsg, UINT nIDEvent, DWORD dwTime);
 	};
 }

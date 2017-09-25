@@ -105,7 +105,7 @@ extern "C" RD_RDP_FUZZER_API PRDPFuzzer OpenRDPFuzzer(const char * config_file)
 {
 	RD_FUZZER::RDP* rdp = new RD_FUZZER::RDP();
 
-	rdp->Init_config("./config.yaml");
+	rdp->Init_config("./RD_RDP_Fuzzer.yaml");
 
 	return (PRDPFuzzer)rdp;
 }

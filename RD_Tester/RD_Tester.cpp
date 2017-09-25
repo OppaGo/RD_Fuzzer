@@ -38,7 +38,7 @@ bool CallFileFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./config.yaml");
+	Fuzzer_Handle = (*pOpenFunc)("./RD_File_Fuzzer.yaml");
 	if (!pFuzzFunc(Fuzzer_Handle)) {
 		fprintf(stderr, "[-] File Fuzzing Error\n");
 	}
@@ -81,7 +81,7 @@ bool CallRDPFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./config.yaml");
+	Fuzzer_Handle = (*pOpenFunc)("./RD_RDP_Fuzzer.yaml");
 	if (!pFuzzFunc(Fuzzer_Handle, 1)) {
 		fprintf(stderr, "[-] RDP Fuzzing Error\n");
 	}
@@ -133,6 +133,10 @@ Exit_Label:
 	return(0);
 }
 
+/*
+*	CallNetFuzzer()
+*	Network Fuzzer »£√‚
+*/
 bool CallNetFuzzer()
 {
 	HINSTANCE hInstDLL;
@@ -161,7 +165,7 @@ bool CallNetFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./config.yaml");
+	Fuzzer_Handle = (*pOpenFunc)("./RD_Net_Fuzzer.yaml");
 	pFuzzFunc(Fuzzer_Handle);
 	(*pCloseFunc)(Fuzzer_Handle);
 

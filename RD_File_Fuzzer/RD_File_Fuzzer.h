@@ -11,6 +11,6 @@
 
 typedef void* PFileFuzzer;
 
-extern "C" RD_FILE_FUZZER_API PFileFuzzer OpenFileFuzzer(const char* config_file = "./config.yaml");
+extern "C" RD_FILE_FUZZER_API PFileFuzzer OpenFileFuzzer(const char* config_file = "./RD_File_Fuzzer.yaml");
 extern "C" RD_FILE_FUZZER_API bool File_Fuzzer_Loop(PFileFuzzer file_fuzzer);
 extern "C" RD_FILE_FUZZER_API void CloseFileFuzzer(PFileFuzzer file_fuzzer);

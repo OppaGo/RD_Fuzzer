@@ -18,3 +18,24 @@ RD_NET_FUZZER_API void NetworkFuzzing(PNetFuzzer pnetfuzz)
 
 	while(1) net_fuzz->NetFuzzing();
 }
+
+extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+{
+	switch (fdwReason)
+	{
+	case DLL_PROCESS_ATTACH:
+		printf("[+] DLL is attached process\n");
+		break;
+	case DLL_PROCESS_DETACH:
+		printf("[+] DLL is dettached process\n");
+		break;
+	case DLL_THREAD_ATTACH:
+		printf("[+] DLL is Attached thread\n");
+		break;
+	case DLL_THREAD_DETACH:
+		printf("[+] DLL is dettached thread\n");
+		break;
+	}
+
+	return TRUE;
+}

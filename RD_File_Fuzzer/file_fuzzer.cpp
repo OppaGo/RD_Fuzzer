@@ -19,7 +19,7 @@ namespace RD_FUZZER
 	 *	설정 파일을 읽어들여, 초기화 수행
 	 */
 	File_Fuzzer::File_Fuzzer() : Mutator(), Debugger() {
-		isconfigured = Init_config("./config.yaml", SET_ONLY_THIS) ? true : false;
+		isconfigured = Init_config("./RD_File_Fuzzer.yaml", SET_ONLY_THIS) ? true : false;
 	}
 
 	/*

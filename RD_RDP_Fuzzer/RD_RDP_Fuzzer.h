@@ -16,6 +16,6 @@ typedef void* PRDPFuzzer;
 
 void print_disconnect_reason(uint16 reason);
 
-extern "C" RD_RDP_FUZZER_API PRDPFuzzer OpenRDPFuzzer(const char* config_file = "./config.yaml");
+extern "C" RD_RDP_FUZZER_API PRDPFuzzer OpenRDPFuzzer(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 extern "C" RD_RDP_FUZZER_API void CloseRDPFuzzer(PRDPFuzzer prdp);
 extern "C" RD_RDP_FUZZER_API RD_BOOL RDPFuzzing(PRDPFuzzer prdp, dword fuzztime);

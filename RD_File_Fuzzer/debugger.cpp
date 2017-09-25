@@ -19,7 +19,7 @@ using namespace std;
 namespace RD_FUZZER
 {
 	Debugger::Debugger() {
-		isconfiged = Init_Debug_config("./config.yaml") ? true : false;
+		isconfiged = Init_Debug_config("./RD_File_Fuzzer.yaml") ? true : false;
 	}
 
 	Debugger::Debugger(const char* config_file) {
