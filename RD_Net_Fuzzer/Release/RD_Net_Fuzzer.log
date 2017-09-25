@@ -1,15 +1,10 @@
-﻿  default.cpp
-  logger.cpp
-  mutator.cpp
-  Network_Fuzzer.cpp
+﻿  Network_Fuzzer.cpp
   RD_Net_Fuzzer.cpp
-  tcp.cpp
-  wellrandom.cpp
      C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_Net_Fuzzer.lib 라이브러리 및 C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_Net_Fuzzer.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  1034 of 1186 functions (87.2%) were compiled, the rest were copied from previous compilation.
-    9 functions were new in current compilation
-    27 functions had inline decision re-evaluated but remain unchanged
+  1 of 1195 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    57 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   RD_Net_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_Net_Fuzzer.dll
   RD_Net_Fuzzer.vcxproj -> C:\Users\Tribal\Documents\Visual Studio 2015\Projects\RD_Fuzzer\Release\RD_Net_Fuzzer.pdb (Full PDB)

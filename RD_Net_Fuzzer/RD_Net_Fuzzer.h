@@ -12,4 +12,4 @@ typedef void* PNetFuzzer;
 
 extern "C" RD_NET_FUZZER_API PNetFuzzer OpenNetFuzzer(const char* config_file = "./config.yaml");
 extern "C" RD_NET_FUZZER_API void CloseNetFuzzer(PNetFuzzer pnetfuzz);
-extern "C" RD_NET_FUZZER_API void NetworkFuzzing(PNetFuzzer pnetfuzz, const char* file_path);
+extern "C" RD_NET_FUZZER_API void NetworkFuzzing(PNetFuzzer pnetfuzz);

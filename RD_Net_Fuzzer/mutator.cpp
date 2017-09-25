@@ -21,15 +21,15 @@ namespace RD_FUZZER
 	 *	Mutator::Mutator()
 	 *	생성자, 설정 파일을 읽어들임
 	 */
-	/*
-	Mutator::Mutator() {
+	
+	/*Mutator::Mutator() {
 		isconfiged = Init_Mutator_config("./config.yaml") ? true : false;
 	}
 
 	Mutator::Mutator(const char* config_file) {
 		isconfiged = Init_Mutator_config(config_file) ? true : false;
-	}
-	*/
+	}*/
+	
 
 	/*
 	*	Init_Mutator_config()
