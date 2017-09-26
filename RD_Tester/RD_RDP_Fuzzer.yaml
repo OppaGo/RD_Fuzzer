@@ -1,0 +1,22 @@
+##############################################################################
+# RDP PROTOCOL FUZZING SETTINGS
+#
+# server_rdp_version : target's RDP Protocol Version
+# server_ip : target's server ip
+# port : target's RDP Protocol port
+# username : for login
+# password : for login
+#
+# command : Not support(reserved)
+# directory : Not support(reserved)
+# domain : Not support(reserved)
+##############################################################################
+server_rdp_version: 3
+server_ip: 192.168.52.128
+port: 3389
+username: Administrator
+password: 1234
+
+command: 
+directory: 
+domain: 

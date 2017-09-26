@@ -1,0 +1,17 @@
+##############################################################################
+# PACKET SNIFFING SETTINGS(Not Supported)
+#
+# packet_storage : Store the packet
+# filter_rule : packet filter expression(pcap expression)
+# netmask : Local Network's netmask
+#
+# timeout : time for timer(seconds)
+# max_packet_num : Maximum number of packet
+##############################################################################
+
+packet_storage: .\\Net_Fuzzer_Packets
+filter_rule: port 3389
+netmask: 0
+
+timeout: 5
+max_packet_num: 1000

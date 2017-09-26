@@ -2,6 +2,8 @@
 #include <io.h>
 #include <conio.h>
 #include <cstdio>
+#include <fstream>
+#include <regex>
 #include "Network_Fuzzer.h"
 #include "default.h"
 
@@ -101,6 +103,40 @@ RD_FUZZER::NET_FUZZ::~NET_FUZZ()
 		delete orig_file_list;
 		orig_file_list = NULL;
 	}
+}
+
+#define BUF_SIZE 512
+bool RD_FUZZER::NET_FUZZ::InitConfigbyFile(const char * config_file)
+{
+	ifstream ifs(config_file);
+	char fdata[BUF_SIZE];
+	if (ifs.is_open()) {
+		while (!ifs.eof()) {
+			memset(fdata, 0, BUF_SIZE);
+			ifs.getline(fdata, BUF_SIZE);
+
+			regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+			string fdata_str = fdata;
+			smatch m;
+
+			bool ismatched = regex_search(fdata_str, m, reg);
+
+			if (ismatched) {
+				char** dummy = NULL;
+				if (!strcmp(m[1].str().c_str(), "orig_path")) orig_path = m[2].str();
+				else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = strtoul(m[2].str().c_str(), dummy, 10);
+			}
+		}
+
+		orig_file_list = NULL;
+		//cout << "[+] Original_Path : " << orig_path << endl;
+		//cout << "[+] Mutated_Path : " << mutated_path << endl;
+
+		ifs.close();
+	}
+	else return(false);
+
+	return(true);
 }
 
 void RD_FUZZER::NET_FUZZ::SetMaxDummySize(dword max)

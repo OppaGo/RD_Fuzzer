@@ -1,0 +1,16 @@
+##############################################################################
+# Network Packet FUZZING SETTINGS
+#
+# server_ip : target's server ip
+# port : target's TCP port
+#
+# orig_path : Sniffed packet files path(Seed file for mutation)
+#
+# dummy_size : for mutation's dummy insection
+##############################################################################
+server_ip: 192.168.52.128
+port: 3389
+
+orig_path: .\\Net_Fuzzer_Packets
+
+dummy_size: 512

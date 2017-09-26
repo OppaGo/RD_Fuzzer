@@ -7,5 +7,5 @@
 
 bool CallFileFuzzer();
 bool CallRDPFuzzer();
-bool CallSniffer(const char* file_path);
+bool CallSniffer();
 bool CallNetFuzzer();

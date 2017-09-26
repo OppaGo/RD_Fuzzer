@@ -12,4 +12,4 @@ typedef void* PSniffer;
 
 extern "C" RD_SNIFFER_API PSniffer OpenSniffer();
 extern "C" RD_SNIFFER_API void CloseSniffer(PSniffer psniff);
-extern "C" RD_SNIFFER_API void Sniffing(PSniffer psniff, const char* file_path);
+extern "C" RD_SNIFFER_API void Sniffing(PSniffer psniff, const char* config_file);

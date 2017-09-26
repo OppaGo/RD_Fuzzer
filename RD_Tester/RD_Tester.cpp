@@ -96,7 +96,7 @@ Exit_Label:
 *	CallSniffer()
 *	Sniffer »£√‚
 */
-bool CallSniffer(const char* file_path)
+bool CallSniffer()
 {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
@@ -125,7 +125,7 @@ bool CallSniffer(const char* file_path)
 	}
 
 	Fuzzer_Handle = (*pOpenFunc)();
-	pSniffFunc(Fuzzer_Handle, file_path);
+	pSniffFunc(Fuzzer_Handle, "./RD_Sniffer.yaml");
 	(*pCloseFunc)(Fuzzer_Handle);
 
 Exit_Label:

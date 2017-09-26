@@ -23,6 +23,7 @@ namespace RD_FUZZER
 		NET_FUZZ();
 		NET_FUZZ(const char* orig_path);
 		~NET_FUZZ();
+		bool InitConfigbyFile(const char* config_file);
 		void SetMaxDummySize(dword max);
 		bool OpenNetFuzzer(const char* server, const uint16 port);
 		void CloseNetFuzzer();

@@ -1,0 +1,24 @@
+##############################################################################
+# FILE FORMAT FUZZING SETTINGS
+#
+# orig_path : original files path(Seed file for mutation)
+# mutated_path : mutated files through mutation
+# result_path : When program is crashed, store the mutated file
+#
+# target_program : Target
+# program_option : Program's CMD Line(argv)
+#
+# timeout : time for timer(seconds)
+# test_count : verify
+# dummy_size : for mutation's dummy insection
+##############################################################################
+orig_path: C:\RD_Fuzzer\original
+mutated_path: C:\RD_Fuzzer\mutated
+result_path: C:\RD_Fuzzer\result
+
+target_program: C:\RD_Fuzzer\Hello.exe
+program_option: 
+
+timeout: 5
+test_count: 5
+dummy_size: 1000

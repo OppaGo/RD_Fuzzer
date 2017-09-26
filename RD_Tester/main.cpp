@@ -6,9 +6,14 @@
 
 using namespace std;
 
+void Usage(const char* argv0)
+{
+	fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1) | Sniffer(2) | Network Fuzzer(3)]\n", argv0);
+}
+
 int main(int argc, char* argv[]) {
 	if (argc != 2) {
-		fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1) | SniffNetwork(2)]\n", argv[0]);
+		Usage(argv[0]);
 		return(-1);
 	}
 
@@ -23,7 +28,7 @@ int main(int argc, char* argv[]) {
 	}
 	else if (select == SniffNetwork)
 	{
-		CallSniffer("C:\\Temp");
+		CallSniffer();
 	}
 	else if (select == NetFuzzer)
 	{
