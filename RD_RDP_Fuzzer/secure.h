@@ -113,6 +113,7 @@ namespace RD_FUZZER
 	public:
 		RDP_SEC();
 		~RDP_SEC();
+		bool sec_Init_config_from_File(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 		/* 48-byte transformation used to generate master secret (6.1) and key material (6.2.2).
 		 * Both SHA1 and MD5 algorithms are used. */
 		void sec_hash_48(uint8 * out, uint8 * in, uint8 * salt1, uint8 * salt2, uint8 salt);

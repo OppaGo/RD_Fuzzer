@@ -1,6 +1,8 @@
 #include "secure.h"
 #include "ssl.h"
-
+#include <fstream>
+#include <regex>
+#include <string>
 
 namespace RD_FUZZER
 {
@@ -43,6 +45,38 @@ namespace RD_FUZZER
 	RDP_SEC::~RDP_SEC()
 	{
 		sec_reset_state();
+	}
+
+#define BUF_SIZE 512
+	bool RDP_SEC::sec_Init_config_from_File(const char * config_file)
+	{
+		std::ifstream ifs(config_file);
+		char fdata[BUF_SIZE];
+		if (ifs.is_open()) {
+			while (!ifs.eof()) {
+				memset(fdata, 0, BUF_SIZE);
+				ifs.getline(fdata, BUF_SIZE);
+
+				std::regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+				std::string fdata_str = fdata;
+				std::smatch m;
+
+				bool ismatched = regex_search(fdata_str, m, reg);
+
+				if (ismatched) {
+					if (!strcmp(m[1].str().c_str(), "username")) strcpy_s(username, 64, m[2].str().c_str());
+					else if (!strcmp(m[1].str().c_str(), "server_rdp_version")) server_rdp_version = atoi(m[2].str().c_str());
+				}
+			}
+
+			ifs.close();
+		}
+		else return(false);
+
+		if (!mcs_Init_config_from_File(config_file))
+			return(false);
+
+		return(true);
 	}
 
 	void RDP_SEC::sec_make_40bit(uint8 * key)

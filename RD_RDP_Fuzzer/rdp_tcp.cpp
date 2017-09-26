@@ -1,5 +1,7 @@
 #include "rdp_tcp.h"
-
+#include <fstream>
+#include <regex>
+#include <string>
 
 namespace RD_FUZZER
 {
@@ -15,6 +17,38 @@ namespace RD_FUZZER
 	RDP_TCP::~RDP_TCP()
 	{
 		tcp_reset_state();
+	}
+
+#define BUF_SIZE 512
+	bool RDP_TCP::tcp_Init_config_from_File(const char * config_file)
+	{
+		std::ifstream ifs(config_file);
+		char fdata[BUF_SIZE];
+		if (ifs.is_open()) {
+			while (!ifs.eof()) {
+				memset(fdata, 0, BUF_SIZE);
+				ifs.getline(fdata, BUF_SIZE);
+
+				std::regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+				std::string fdata_str = fdata;
+				std::smatch m;
+
+				bool ismatched = regex_search(fdata_str, m, reg);
+
+				if (ismatched) {
+					if (!strcmp(m[1].str().c_str(), "server_ip")) strcpy_s(server, 64, m[2].str().c_str());
+					else if (!strcmp(m[1].str().c_str(), "port")) tcp_port_rdp = atoi(m[2].str().c_str());
+				}
+			}
+
+			ifs.close();
+		}
+		else return(false);
+
+		if (!mutator.Init_Mutator_config(config_file))
+			return(false);
+
+		return(true);
 	}
 
 	RD_BOOL RDP_TCP::tcp_can_send(int sck, int millis)
@@ -81,8 +115,6 @@ namespace RD_FUZZER
 #endif
 		result = &out_stream[cur_stream_id];
 		cur_stream_id = (cur_stream_id + 1) % STREAM_COUNT;
-
-		mutator.SetMaxDummySize(512);
 
 		if (maxlen + mutator.GetMaxDummySize() > result->size)
 		{

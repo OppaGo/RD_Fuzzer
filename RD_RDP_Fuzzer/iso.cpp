@@ -7,6 +7,14 @@ namespace RD_FUZZER
 	{
 	}
 
+	bool RDP_ISO::iso_Init_config_from_File(const char * config_file)
+	{
+		if(!tcp_Init_config_from_File(config_file))
+			return(false);
+
+		return(true);
+	}
+
 	void RDP_ISO::iso_send_msg(uint8 code)
 	{
 		STREAM s;

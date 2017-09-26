@@ -53,6 +53,7 @@ namespace RD_FUZZER
 	public:
 		RDP_TCP();
 		~RDP_TCP();
+		bool tcp_Init_config_from_File(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 		/* Establish a connection on the TCP layer */
 		RD_BOOL tcp_connect(char *server);
 		RD_BOOL tcp_connect(char *server, int port);

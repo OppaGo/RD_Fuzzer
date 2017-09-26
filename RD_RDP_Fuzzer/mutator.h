@@ -53,7 +53,7 @@ namespace RD_FUZZER
 		//Mutator();
 		//Mutator(const char* config_file);
 		~Mutator();
-		bool Init_Mutator_config(const char* config_file);
+		bool Init_Mutator_config(const char* config_file="./RD_RDP_Fuzzer.yaml");
 		bool Init_Mutator_config(const std::string& orig_path, const std::string& mutated_path, dword dummy_size_max);
 		bool is_mutator_config();
 		dword GenRandomValue(dword max);
@@ -61,6 +61,7 @@ namespace RD_FUZZER
 		dword Mutation(char* data, const dword dsize);
 		dword Mutation_in_max(char* data, const dword dsize, const dword maxsize);
 		dword Mutation_in_range(char* data, const dword begin, const dword end);
+		dword ByteFlipMutation(char * data, const dword dsize);
 		void SetMaxDummySize(dword max);
 		dword GetMaxDummySize(void);
 	};

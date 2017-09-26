@@ -16,6 +16,7 @@ namespace RD_FUZZER
 
 	public:
 		RDP_ISO();
+		bool iso_Init_config_from_File(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 		/* Initialise ISO transport data packet */
 		STREAM iso_init(int length);
 		/* Send an ISO data PDU */
@@ -70,6 +71,7 @@ namespace RD_FUZZER
 	public:
 		RDP_MCS();
 		~RDP_MCS();
+		bool mcs_Init_config_from_File(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 		/* Initialise an MCS transport data packet */
 		STREAM mcs_init(int length);
 		/* Send an MCS transport data packet to a specific channel */

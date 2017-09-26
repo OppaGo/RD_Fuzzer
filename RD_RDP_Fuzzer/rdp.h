@@ -197,7 +197,7 @@ namespace RD_FUZZER
 		RD_BOOL rdp_redirect(void);
 		void rdp_support_redirect();//char *server, uint32* flags, char *domain, char* username, char *password);
 		bool is_config(void);
-		bool Init_config(const char* config_file);
+		bool Init_config(const char* config_file = "./RD_RDP_Fuzzer.yaml");
 		void reset_password(void);
 	};
 #define RDP5_FLAG 0x0030

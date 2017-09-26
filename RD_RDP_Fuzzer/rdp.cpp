@@ -217,7 +217,12 @@ namespace RD_FUZZER
 		out_uint16(s, 0);	/* compress_len */
 
 #ifdef RDP_FUZZ
-		mutator.Mutation_in_max((char*)s->data, s->size, s->size + mutator.GetMaxDummySize());
+		if (s->size != s->size + mutator.GetMaxDummySize()) {
+			mutator.Mutation_in_max((char*)s->data, s->size, s->size + mutator.GetMaxDummySize());
+		}
+		else {
+			mutator.ByteFlipMutation((char*)s->data, s->size);
+		}
 		printf("rdp_send_data\n");
 		std::string filename = "rdp_fuzz_" + std::to_string(session_count);
 		write_hexdump(s->data, s->size, filename.c_str());
@@ -1680,18 +1685,18 @@ namespace RD_FUZZER
 				bool ismatched = regex_search(fdata_str, m, reg);
 
 				if (ismatched) {
-					if (!strcmp(m[1].str().c_str(), "server_ip")) {
-						STRNCPY(server, m[2].str().c_str(), 64);
-					}
-					else if (!strcmp(m[1].str().c_str(), "port")) {
-						tcp_port_rdp = atoi(m[2].str().c_str());
-					}
-					else if (!strcmp(m[1].str().c_str(), "domain")) {
+					//if (!strcmp(m[1].str().c_str(), "server_ip")) {
+					//	STRNCPY(server, m[2].str().c_str(), 64);
+					//}
+					//else if (!strcmp(m[1].str().c_str(), "port")) {
+					//	tcp_port_rdp = atoi(m[2].str().c_str());
+					//}
+					if (!strcmp(m[1].str().c_str(), "domain")) {
 						STRNCPY(domain, m[2].str().c_str(), 16);
 					}
-					else if (!strcmp(m[1].str().c_str(), "username")) {
-						STRNCPY(username, m[2].str().c_str(), 64);
-					}
+					//else if (!strcmp(m[1].str().c_str(), "username")) {
+					//	STRNCPY(username, m[2].str().c_str(), 64);
+					//}
 					else if (!strcmp(m[1].str().c_str(), "password")) {
 						STRNCPY(password, m[2].str().c_str(), 64);
 					}
@@ -1701,9 +1706,9 @@ namespace RD_FUZZER
 					else if (!strcmp(m[1].str().c_str(), "directory")) {
 						STRNCPY(directory, m[2].str().c_str(), 256);
 					}
-					else if (!strcmp(m[1].str().c_str(), "server_rdp_version")) {
-						server_rdp_version = atoi(m[2].str().c_str());
-					}
+					//else if (!strcmp(m[1].str().c_str(), "server_rdp_version")) {
+					//	server_rdp_version = atoi(m[2].str().c_str());
+					//}
 				}
 			}
 			ifs.close();
@@ -1715,6 +1720,11 @@ namespace RD_FUZZER
 			//}
 		}
 		else return(false);
+
+		if (!sec_Init_config_from_File(config_file))
+			return(false);
+
+		isconfigured = true;
 
 		return(true);
 	}

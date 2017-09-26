@@ -19,6 +19,14 @@ namespace RD_FUZZER
 		mcs_reset_state();
 	}
 
+	bool RDP_MCS::mcs_Init_config_from_File(const char * config_file)
+	{
+		if (!iso_Init_config_from_File(config_file))
+			return(false);
+
+		return(true);
+	}
+
 	STREAM RDP_MCS::mcs_init(int length)
 	{
 		STREAM s;

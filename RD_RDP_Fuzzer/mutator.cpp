@@ -51,16 +51,15 @@ namespace RD_FUZZER
 				bool ismatched = regex_search(fdata_str, m, reg);
 
 				if (ismatched) {
-					char** dummy = NULL;
-					if (!strcmp(m[1].str().c_str(), "orig_path")) orig_path = m[2].str();
-					else if (!strcmp(m[1].str().c_str(), "mutated_path")) mutated_path = m[2].str();
-					else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = strtoul(m[2].str().c_str(), dummy, 10);
+					//if (!strcmp(m[1].str().c_str(), "orig_path")) orig_path = m[2].str();
+					//else if (!strcmp(m[1].str().c_str(), "mutated_path")) mutated_path = m[2].str();
+					if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = atoi(m[2].str().c_str());
 				}
 			}
 
 			orig_file_list = NULL;
-			cout << "[+] Original_Path : " << orig_path << endl;
-			cout << "[+] Mutated_Path : " << mutated_path << endl;
+			//cout << "[+] Original_Path : " << orig_path << endl;
+			//cout << "[+] Mutated_Path : " << mutated_path << endl;
 
 			ifs.close();
 		}
@@ -257,6 +256,16 @@ namespace RD_FUZZER
 		dword mutation_count = GenRandomValue(end - begin);
 		for (dword i = 0; i < mutation_count; i++) {
 			Byte_flipping_in_range(data, begin, end);
+		}
+
+		return(mutation_count);
+	}
+
+	dword Mutator::ByteFlipMutation(char * data, const dword dsize)
+	{
+		dword mutation_count = GenRandomValue(dsize);
+		for (dword i = 0; i < mutation_count; i++) {
+			Byte_flipping(data, dsize);
 		}
 
 		return(mutation_count);
