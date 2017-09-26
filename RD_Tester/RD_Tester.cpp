@@ -10,7 +10,7 @@ using namespace std;
 *	CallFileFuzzer()
 *	File Fuzzer 호출
 */
-bool CallFileFuzzer()
+bool CallFileFuzzer(const char* config_file)
 {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
@@ -38,7 +38,7 @@ bool CallFileFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./RD_File_Fuzzer.yaml");
+	Fuzzer_Handle = (*pOpenFunc)(config_file);
 	if (!pFuzzFunc(Fuzzer_Handle)) {
 		fprintf(stderr, "[-] File Fuzzing Error\n");
 	}
@@ -53,7 +53,7 @@ Exit_Label:
 *	CallRDPFuzzer()
 *	RDP Fuzzer 호출
 */
-bool CallRDPFuzzer()
+bool CallRDPFuzzer(const char* config_file)
 {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
@@ -81,7 +81,7 @@ bool CallRDPFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./RD_RDP_Fuzzer.yaml");
+	Fuzzer_Handle = (*pOpenFunc)(config_file);
 	if (!pFuzzFunc(Fuzzer_Handle, 1)) {
 		fprintf(stderr, "[-] RDP Fuzzing Error\n");
 	}
@@ -96,7 +96,7 @@ Exit_Label:
 *	CallSniffer()
 *	Sniffer 호출
 */
-bool CallSniffer()
+bool CallSniffer(const char* config_file)
 {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
@@ -125,7 +125,7 @@ bool CallSniffer()
 	}
 
 	Fuzzer_Handle = (*pOpenFunc)();
-	pSniffFunc(Fuzzer_Handle, "./RD_Sniffer.yaml");
+	pSniffFunc(Fuzzer_Handle, config_file);
 	(*pCloseFunc)(Fuzzer_Handle);
 
 Exit_Label:
@@ -137,7 +137,7 @@ Exit_Label:
 *	CallNetFuzzer()
 *	Network Fuzzer 호출
 */
-bool CallNetFuzzer()
+bool CallNetFuzzer(const char* config_file)
 {
 	HINSTANCE hInstDLL;
 	void* Fuzzer_Handle;
@@ -165,7 +165,7 @@ bool CallNetFuzzer()
 		goto Exit_Label;
 	}
 
-	Fuzzer_Handle = (*pOpenFunc)("./RD_Net_Fuzzer.yaml");
+	Fuzzer_Handle = (*pOpenFunc)(config_file);
 	pFuzzFunc(Fuzzer_Handle);
 	(*pCloseFunc)(Fuzzer_Handle);
 

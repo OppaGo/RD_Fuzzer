@@ -12,9 +12,9 @@
 # test_count : verify
 # dummy_size : for mutation's dummy insection
 ##############################################################################
-orig_path: C:\RD_Fuzzer\original
-mutated_path: C:\RD_Fuzzer\mutated
-result_path: C:\RD_Fuzzer\result
+orig_path: .\Original
+mutated_path: .\Mutated
+result_path: .\Result
 
 target_program: C:\RD_Fuzzer\Hello.exe
 program_option: 

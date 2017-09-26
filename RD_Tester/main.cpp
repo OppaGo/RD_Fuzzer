@@ -8,31 +8,43 @@ using namespace std;
 
 void Usage(const char* argv0)
 {
-	fprintf(stderr, "Usage > %s [File Format Fuzzer(0) | RDP Fuzzer(1) | Sniffer(2) | Network Fuzzer(3)]\n", argv0);
+	fprintf(stderr, "Usage: %s [Fuzzer Num] [Config file]\n", argv0);
+	fprintf(stderr, "     - Fuzzer Num: File Format Fuzzer(0)\n");
+	fprintf(stderr, "                   RDP Fuzzer(1)\n");
+	fprintf(stderr, "                   Sniffer(2)\n");
+	fprintf(stderr, "                   Network Fuzzer(3)\n");
+	fprintf(stderr, "     - Config file : ex) RD_File_Fuzzer.yaml etc...");
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != 2) {
+	if (argc < 2) {
 		Usage(argv[0]);
+
 		return(-1);
 	}
 
 	unsigned int select = /* RDPNetwork; */atoi(argv[1]);
+	const char* config_file = (argc >= 3)?argv[2]:NULL;
+
 	if (select == FileFormat)
 	{
-		CallFileFuzzer();
+		(config_file == NULL) ? "RD_File_Fuzzer.yaml" : config_file;
+		CallFileFuzzer(config_file);
 	}
 	else if (select == RDPNetwork)
 	{
-		CallRDPFuzzer();
+		(config_file == NULL) ? "RD_RDP_Fuzzer.yaml" : config_file;
+		CallRDPFuzzer(config_file);
 	}
 	else if (select == SniffNetwork)
 	{
-		CallSniffer();
+		(config_file == NULL) ? "RD_Sniffer.yaml" : config_file;
+		CallSniffer(config_file);
 	}
 	else if (select == NetFuzzer)
 	{
-		CallNetFuzzer();
+		(config_file == NULL) ? "RD_Net_Fuzzer.yaml" : config_file;
+		CallNetFuzzer(config_file);
 	}
 	else {
 		fprintf(stderr, "[-] Not yet Supported.\n");

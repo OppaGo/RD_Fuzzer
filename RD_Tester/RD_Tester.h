@@ -5,7 +5,7 @@
 #define SniffNetwork	2
 #define NetFuzzer		3
 
-bool CallFileFuzzer();
-bool CallRDPFuzzer();
-bool CallSniffer();
-bool CallNetFuzzer();
+bool CallFileFuzzer(const char* config_file);
+bool CallRDPFuzzer(const char* config_file);
+bool CallSniffer(const char* config_file);
+bool CallNetFuzzer(const char* config_file);

@@ -9,7 +9,7 @@
 # max_packet_num : Maximum number of packet
 ##############################################################################
 
-packet_storage: .\\Net_Fuzzer_Packets
+packet_storage: .\Net_Fuzzer_Packets
 filter_rule: port 3389
 netmask: 0
 
