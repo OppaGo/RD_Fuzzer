@@ -152,12 +152,14 @@
   <ItemGroup>
     <ClCompile Include="error.c" />
     <ClCompile Include="hexdump.c" />
-    <ClCompile Include="ioctl.cpp" />
+    <ClCompile Include="ioctl.c" />
+    <ClCompile Include="logger.c" />
     <ClCompile Include="RD_Driver_Fuzzer.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="default.h" />
     <ClInclude Include="ioctl.h" />
+    <ClInclude Include="logger.h" />
     <ClInclude Include="RD_Driver_Fuzzer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

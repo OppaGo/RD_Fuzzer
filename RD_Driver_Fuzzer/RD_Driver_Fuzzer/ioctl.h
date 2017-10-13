@@ -33,3 +33,4 @@
 void IOCTLPrintDevice(const int32 DeviceType);
 void IOCTLPrintMethod(const int32 Method);
 void IOCTLPrintAccess(const int32 Access);
+void PrintIOCTLValue(int32 ioctl_code);

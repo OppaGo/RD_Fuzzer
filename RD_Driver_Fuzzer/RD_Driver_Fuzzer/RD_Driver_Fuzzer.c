@@ -1,27 +1,44 @@
 #include "RD_Driver_Fuzzer.h"
 
-static DWORD ioctl_code = TVMonitor0;
+//static uint32 ioctl_code = TVMonitor0;
 static uint32 (*GenRandomValue)(uint32);
 static uint32 (*Mutation)(char*, uint32);
 
 int main(void)
 {
-	HANDLE handle;
-	WCHAR deviceName[] = L"\\\\.\\MonitorFunction0"; // L"\\\\Device\\MonitorFunction0";
-	DWORD dwRet;
-	uint32 bufIo_length = 0;
-	uint8 bufIn[BUF_MAXSIZE];
-	uint8 bufOut[BUF_MAXSIZE];
-	
 	FILE* fp = NULL;
-	errno_t err;
+	HINSTANCE hInstDLL = NULL;
+	uint32 count = 0;
+	uint32 ioctl_code_list[] = {TVMonitor0, TVMonitor1, TVMonitor2, TVMonitor3, TVMonitor4, TVMonitor5};
+	uint32 ioctl_code = ioctl_code_list[0];
 
+	PrintIOCTLValue(ioctl_code);
+
+	hInstDLL = GetMutationFuncinDLL();
+	if (hInstDLL == NULL) return Error;
+	
+	if ((fp = OpenLogger()) == NULL) return Error;
+	while (1) {
+		ioctl_code = ioctl_code_list[GenRandomValue(sizeof(ioctl_code_list) / sizeof(uint32))];
+		if (DriverFuzzing(ioctl_code, fp) != True)
+			break;
+		printf("Index[%u] Fuzzing...\n", count);
+	}
+	CloseLogger(fp);
+
+	CleanupMutationFunc(hInstDLL);
+	
+	return 0;
+}
+
+HINSTANCE GetMutationFuncinDLL()
+{
 	HINSTANCE hInstDLL = LoadLibrary(L"RD_Mutation_Lib.dll");
 	if (hInstDLL == NULL)
 	{
 		fprintf(stderr, "[-] LoadLibrary Error\n");
 		PrintLastError(GetLastError());
-		return Error;
+		return NULL;
 	}
 
 	GenRandomValue = (uint32(*)(uint32))GetProcAddress(hInstDLL, "GenRandomValue");
@@ -31,19 +48,36 @@ int main(void)
 	{
 		fprintf(stderr, "[-] GetProcAddress Error\n");
 		PrintLastError(GetLastError());
-		return Error;
+		return NULL;
 	}
 
-	printf("DeviceType : 0x%x\n", CTL_DEVICE(ioctl_code));
-	printf("Access : 0x%x\n", CTL_ACCESS(ioctl_code));
-	printf("Function : 0x%x\n", CTL_FUNCTION(ioctl_code));
-	printf("Method : 0x%x\n", CTL_METHOD(ioctl_code));
-	
-	if ((err = fopen_s(&fp, "RD_ioctl_fuzzer.log", "w")) != 0)
-	{
-		fprintf(stderr, "[-] fopen_s error.\n");
-		return Error;
-	}
+	return hInstDLL;
+}
+
+void CleanupMutationFunc(HINSTANCE hInstDLL)
+{
+	FreeLibrary(hInstDLL);
+}
+
+uint32 CreateMutatedData(uint8* bufIn)
+{
+	uint32 bufIo_length = (*GenRandomValue)(BUF_MAXSIZE);
+
+	memset(bufIn, 0, BUF_MAXSIZE);
+	memset(bufIn, 'A', bufIo_length);
+	(*Mutation)(bufIn, bufIo_length);
+
+	return bufIo_length;
+}
+
+uint32 DriverFuzzing(uint32 ioctl_code, FILE* fp)
+{
+	HANDLE handle;
+	WCHAR deviceName[] = L"\\\\.\\MonitorFunction0"; // L"\\\\Device\\MonitorFunction0";
+	DWORD dwRet;
+	uint32 bufIo_length = 0;
+	uint8 bufIn[BUF_MAXSIZE];
+	uint8 bufOut[BUF_MAXSIZE];
 
 	handle = CreateFileW(
 		deviceName,
@@ -76,19 +110,16 @@ int main(void)
 	}
 	fprintf(fp, "[+] IOCTL CODE : %u\n\n", ioctl_code);
 
-	bufIo_length = (*GenRandomValue)(BUF_MAXSIZE);
 	memset(bufOut, 0, BUF_MAXSIZE);
-	memset(bufIn, 0, BUF_MAXSIZE);
-	memset(bufIn, 'A', bufIo_length);
-	(*Mutation)(bufIn, bufIo_length);
+	bufIo_length = CreateMutatedData(bufIn);
 	if (!DeviceIoControl(
-		handle, 
-		ioctl_code, 
+		handle,
+		ioctl_code,
 		bufIn,
-		bufIo_length, 
-		bufOut, 
-		bufIo_length, 
-		&dwRet, 
+		bufIo_length,
+		bufOut,
+		bufIo_length,
+		&dwRet,
 		NULL))
 	{
 		goto IoControlError;
@@ -99,18 +130,15 @@ int main(void)
 	fhexdump(fp, bufIn, bufIo_length);
 
 	CloseHandle(handle);
-	fclose(fp);
 
-	FreeLibrary(hInstDLL);
-	return 0;
+	return True;
 
 IoControlError:
 	fprintf(stderr, "[-] DeviceIoControl() Failed..\n");
 	fprintf(fp, "[-] DeviceIoControl() Failed..\n");
 	fprintf(fp, "============================================\n\n");
-	
+
 	CloseHandle(handle);
-	fclose(fp);
 
 	return Error;
 }

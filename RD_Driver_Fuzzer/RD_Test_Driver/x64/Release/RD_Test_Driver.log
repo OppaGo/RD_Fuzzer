@@ -1,5 +1,5 @@
 ﻿  Building 'RD_Test_Driver' with toolset 'WindowsKernelModeDriver10.0' and the 'Desktop' target platform.
-  Stamping x64\Release\RD_Test_Driver.inf [Version] section with DriverVer=10/14/2017,0.56.28.80
+  Stamping x64\Release\RD_Test_Driver.inf [Version] section with DriverVer=10/14/2017,5.22.14.277
   RD_Test_Driver.c
 RD_Test_Driver.c(3): error C2220: 경고가 오류로 처리되어 생성된 'object' 파일이 없습니다.
 RD_Test_Driver.c(3): warning C4100: 'RegistryPath': 참조되지 않은 정식 매개 변수입니다.

@@ -7,7 +7,7 @@ Signature="$WINDOWS NT$"
 Class=System
 ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
 Provider=%ManufacturerName%
-DriverVer = 10/14/2017,0.56.28.80
+DriverVer = 10/14/2017,5.22.14.277
 CatalogFile=RD_Test_Driver.cat
 
 [DestinationDirs]

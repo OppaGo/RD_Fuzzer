@@ -22,6 +22,9 @@ void PrintLastError(uint32 lasterror)
 	case 0x50:
 		fprintf(stderr, "[-] Error_Not_Supported : 0x%x\n", lasterror);
 		break;
+	case 0x7e:
+		fprintf(stderr, "[-] Error_Module_Not_Found : 0x%x\n", lasterror);
+		break;
 	default:
 		fprintf(stderr, "[-] Unknown Error : 0x%x\n", lasterror);
 		break;
