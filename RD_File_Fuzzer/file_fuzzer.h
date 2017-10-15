@@ -22,7 +22,7 @@ namespace RD_FUZZER
 	protected:
 		std::string result_path;
 
-		virtual dword DebugStart();
+		dword DebugStart();
 
 	public:
 		File_Fuzzer();

@@ -4,7 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
-#include <thread>
+#include <future>
+#include <chrono>
 #include "file_fuzzer.h"
 
 using namespace std;
@@ -116,39 +117,33 @@ namespace RD_FUZZER
 	*	스레드가 실행할 파일 퍼징 함수
 	*/
 	bool File_Fuzzer::FileFuzzing(const string &mutated_full_path, const string &mutated_file) {
-		//time_t old_t, new_t;
-		dword status;
-
+		
 		if (!Open_Process(target_program.c_str(), (LPSTR)mutated_full_path.c_str()))
 			return(false);
 
-		thread t(&File_Fuzzer::CloseProcess, this);
-		this_thread::sleep_for(chrono::duration<int>(timeout));
-		/*
-		time(&old_t);
-		time(&new_t);
-		//SetTimer(NULL, 0, timeout,(TIMERPROC) File_Fuzzer::TimeProc);
-		while ((new_t - old_t) < timeout / 1000) {
-			status = DebugStart();
-			if (status == Access_Violation) {
-				cout << "[+] Access Violation!" << endl;
-				Store_Crash(mutated_full_path, mutated_file);
-				break;
-			}
-			time(&new_t);
-		}
-		//KillTimer(NULL, 0);
-		CloseProcess();
-		*/
-		while (status = DebugStart()) {
-			if (status == Access_Violation) {
-				cout << "[+] Access Violation!" << endl;
-				Store_Crash(mutated_full_path, mutated_file);
-				break;
-			}
-		}
-		t.join();
+		//auto fut = std::async(std::launch::async, &File_Fuzzer::DebugStart, this);
 
+		//std::chrono::milliseconds span(timeout);
+		//while (fut.wait_for(span) == std::future_status::timeout);
+		//status = fut.get();
+		//if (status == Access_Violation) {
+		//	cout << "[+] Access Violation!" << endl;
+		//	Store_Crash(mutated_full_path, mutated_file);
+		//}
+
+		dword t = GetTickCount();
+		while (1)
+		{
+			if ((GetTickCount() - t) > 300)
+				break;
+			if (DebugStart() == Access_Violation) {
+				cout << "[+] Access Violation!" << endl;
+				Store_Crash(mutated_full_path, mutated_file);
+				break;
+			}
+		}
+		CloseProcess();
+		
 		return(true);
 	}
 
@@ -181,25 +176,7 @@ namespace RD_FUZZER
 
 		return(true);
 	}
-	/*
-	*	TimeProc()
-	*	Fuzzing Timer
-	*	실행한 프로세스 종료를 위한 타이머 함수
-	*/
-	/*
-	void CALLBACK File_Fuzzer::TimeProc(
-		HWND hwnd,
-		UINT uMsg,
-		UINT nIDEvent,
-		DWORD dwTime)
-	{
-		if (nIDEvent == 0) {
-			cout << "Die!" << endl;
-		}
-		else
-			printf("TimerEvent Pass\n");
-	}*/
-
+	
 	/*
 	 *	DebugStart()
 	 *	실행된 또는 Attached Process Debug 수행
