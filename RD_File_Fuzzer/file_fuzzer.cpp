@@ -134,7 +134,7 @@ namespace RD_FUZZER
 		dword t = GetTickCount();
 		while (1)
 		{
-			if ((GetTickCount() - t) > 300)
+			if ((GetTickCount() - t) > timeout)
 				break;
 			if (DebugStart() == Access_Violation) {
 				cout << "[+] Access Violation!" << endl;
