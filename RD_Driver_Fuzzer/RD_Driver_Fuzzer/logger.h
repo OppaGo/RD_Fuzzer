@@ -2,5 +2,5 @@
 #include <stdio.h>
 #include "default.h"
 
-FILE* OpenLogger();
+FILE* OpenLogger(const char* filename);
 void CloseLogger(FILE* fp);

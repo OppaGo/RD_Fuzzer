@@ -27,6 +27,9 @@
     <ClInclude Include="logger.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="wingetopt.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RD_Driver_Fuzzer.c">
@@ -42,6 +45,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ioctl.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="wingetopt.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

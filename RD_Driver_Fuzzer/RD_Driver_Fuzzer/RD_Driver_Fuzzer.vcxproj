@@ -155,12 +155,14 @@
     <ClCompile Include="ioctl.c" />
     <ClCompile Include="logger.c" />
     <ClCompile Include="RD_Driver_Fuzzer.c" />
+    <ClCompile Include="wingetopt.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="default.h" />
     <ClInclude Include="ioctl.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="RD_Driver_Fuzzer.h" />
+    <ClInclude Include="wingetopt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
