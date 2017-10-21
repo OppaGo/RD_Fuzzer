@@ -2,9 +2,14 @@
 
 //static uint32 ioctl_code = TVMonitor0;
 static uint32 (*GenRandomValue)(uint32);
-static uint32 (*Mutation)(char*, uint32);
+static uint32(*Mutation)(char*, uint32);
 
 #define IOCTL_LIST_LENGTH (argc-3)//(sizeof(ioctl_code_list) / sizeof(uint32))
+#define SetParam(t, d, i, f) {					\
+	((struct ThreadParam*)t)->DeviceName = d;	\
+	((struct ThreadParam*)t)->ioctl_code = i;	\
+	((struct ThreadParam*)t)->fp = f;			\
+}
 int main(int argc, char* argv[])
 {
 	FILE* fp = NULL;
@@ -14,6 +19,9 @@ int main(int argc, char* argv[])
 	int8 filename[MAX_PATH] = { 0, };
 	uint32* ioctl_code_list = NULL;//{TVMonitor0, TVMonitor1, TVMonitor2, TVMonitor3, TVMonitor4, TVMonitor5};
 	uint32 ioctl_code;
+	LPDWORD lpThreadId[5] = { 0, };
+	HANDLE hThread[5] = { 0, };
+	struct ThreadParam tp[5];
 
 	if (argc < 5) {
 		Usage(argv[0]);
@@ -38,14 +46,19 @@ int main(int argc, char* argv[])
 	if (hInstDLL == NULL) return Error;
 	
 	while (1) {
-		sprintf_s(filename, MAX_PATH, "RD_Driver_Fuzzer_%u.log", count);
+		sprintf_s(filename, MAX_PATH, "RD_Driver_Fuzzer_.log");
 		if ((fp = OpenLogger(filename)) == NULL) return Error;
 		printf("[+] Start Index_%u Fuzzing\n", count);
-		while (1) {
+		for (uint32 i = 0; i < 5; i++) {
 			ioctl_code = ioctl_code_list[GenRandomValue(IOCTL_LIST_LENGTH - 1)];
-			//PrintIOCTLValue(ioctl_code);
-			if (DriverFuzzing(DeviceName, ioctl_code, fp) != True)
-				break;
+			SetParam(&tp[i], DeviceName, ioctl_code, fp);
+			hThread[i] = CreateThread(
+								NULL,
+								0,
+								ThreadFunctionForFuzzing,
+								&tp[i],
+								0,
+								lpThreadId[i]);
 		}
 		printf("[+] Index_%u Fuzzing Done.\n", count++);
 		CloseLogger(fp);
@@ -170,6 +183,17 @@ IoControlError:
 	CloseHandle(handle);
 
 	return Error;
+}
+
+DWORD WINAPI ThreadFunctionForFuzzing(LPVOID lpParam)
+{
+	struct ThreadParam* tp = (struct ThreadParam*)lpParam;
+
+	while (1) {
+		//PrintIOCTLValue(ioctl_code);
+		if (DriverFuzzing(tp->DeviceName, tp->ioctl_code, tp->fp) != True)
+			break;
+	}
 }
 
 void Usage(char* exe)
