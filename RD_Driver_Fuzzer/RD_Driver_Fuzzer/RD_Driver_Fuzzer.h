@@ -23,4 +23,4 @@ uint32 DriverFuzzing(LPWSTR DeviceName, uint32 ioctl_code, FILE* fp);
 DWORD WINAPI ThreadFunctionForFuzzing(LPVOID lpParam);
 
 void Usage(char* exe);
-uint32 GetIOCTLOpt(int argc, char** argv, LPWSTR *DeviceName, uint32 *ioctl_code_list);
+uint32 GetIOCTLOpt(int argc, char** argv, LPWSTR *DeviceName, uint32 *ioctl_code_list, DWORD *timeout, uint32 *threads_count);
