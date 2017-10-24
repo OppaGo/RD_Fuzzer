@@ -1,25 +1,9 @@
 #include "RD_Driver_Fuzzer.h"
 
-static uint32 (*GenRandomValue)(uint32);
+static uint32(*GenRandomValue)(uint32);
 static uint32(*Mutation)(char*, uint32);
 
 #define IOCTL_LIST_LENGTH (argc-3)
-#define InitThreads(c, l, h, p) {										\
-	l = (LPDWORD*) malloc(c * sizeof(LPDWORD));							\
-	h = (HANDLE*) malloc(c * sizeof(HANDLE));							\
-	p = (struct ThreadParam*) malloc(c * sizeof(struct ThreadParam));	\
-}
-#define SetParam(t, d, i, f) {					\
-	((struct ThreadParam*)t)->DeviceName = d;	\
-	((struct ThreadParam*)t)->ioctl_code = i;	\
-	((struct ThreadParam*)t)->fp = f;			\
-}
-#define CleanThreads(l, h, p) {	\
-	free(l);					\
-	free(h);					\
-	free(p);					\
-}
-
 int main(int argc, char* argv[])
 {
 	FILE* fp = NULL;
@@ -29,12 +13,6 @@ int main(int argc, char* argv[])
 	int8 filename[MAX_PATH] = { 0, };
 	uint32* ioctl_code_list = NULL;
 	uint32 ioctl_code;
-	DWORD timeout;
-	uint32 threads_count = 0;
-	LPDWORD *lpThreadId = NULL;
-	HANDLE *hThread = NULL;
-	struct ThreadParam *tp = NULL;
-	DWORD result;
 
 	if (argc < 5) {
 		Usage(argv[0]);
@@ -42,9 +20,9 @@ int main(int argc, char* argv[])
 		return Error;
 	}
 
-	ioctl_code_list = (uint32*)malloc(IOCTL_LIST_LENGTH*sizeof(uint32));
+	ioctl_code_list = (uint32*)malloc(IOCTL_LIST_LENGTH * sizeof(uint32));
 	memset(ioctl_code_list, 0, IOCTL_LIST_LENGTH * sizeof(uint32));
-	if (GetIOCTLOpt(argc, argv, &DeviceName, ioctl_code_list, &timeout, &threads_count) != True)
+	if (GetIOCTLOpt(argc, argv, &DeviceName, ioctl_code_list) != True)
 	{
 		fprintf(stderr, "[-] getopt error\n");
 
@@ -54,40 +32,24 @@ int main(int argc, char* argv[])
 	wprintf(L"Device Name : %ws\n", DeviceName);
 	for (int i = 0; ioctl_code_list[i] != 0; i++)
 		printf("[%u] 0x%x\n", i, ioctl_code_list[i]);
-	printf("timeout : %u\n", timeout);
-	printf("threads_cout : %u\n", threads_count);
 
 	hInstDLL = GetMutationFuncinDLL();
 	if (hInstDLL == NULL) return Error;
-	
-	InitThreads(threads_count, lpThreadId, hThread, tp);
+
 	while (1) {
 		sprintf_s(filename, MAX_PATH, "RD_Driver_Fuzzer_.log");
 		if ((fp = OpenLogger(filename)) == NULL) return Error;
 		printf("[+] Start Index_%u Fuzzing\n", count);
-		for (uint32 i = 0; i < threads_count; i++) {
+		while (1) {
 			ioctl_code = ioctl_code_list[GenRandomValue(IOCTL_LIST_LENGTH - 1)];
-			SetParam(&tp[i], DeviceName, ioctl_code, fp);
-			hThread[i] = CreateThread(
-								NULL,
-								0,
-								ThreadFunctionForFuzzing,
-								&tp[i],
-								0,
-								lpThreadId[i]);
-			if (hThread[i] == NULL)
-				PrintLastError(GetLastError());
+			//PrintIOCTLValue(ioctl_code);
+			if (DriverFuzzing(DeviceName, ioctl_code, fp) != True)
+				break;
+			Sleep(500);
 		}
-		Sleep(timeout);
 		printf("[+] Index_%u Fuzzing Done.\n", count++);
-		for (uint32 i = 0; i < threads_count; i++) {
-			GetExitCodeThread(hThread[i], &result);
-			if (CloseHandle(hThread[i]) == 0)
-				PrintLastError(GetLastError());
-		}
 		CloseLogger(fp);
 	}
-	CleanThreads(lpThreadId, hThread, tp);
 
 	CleanupMutationFunc(hInstDLL);
 	free(DeviceName);
@@ -210,41 +172,27 @@ IoControlError:
 	return Error;
 }
 
-DWORD WINAPI ThreadFunctionForFuzzing(LPVOID lpParam)
-{
-	struct ThreadParam* tp = (struct ThreadParam*)lpParam;
-
-	while (1) {
-		//PrintIOCTLValue(ioctl_code);
-		if (DriverFuzzing(tp->DeviceName, tp->ioctl_code, tp->fp) != True)
-			break;
-	}
-}
-
 void Usage(char* exe)
 {
-	fprintf(stderr, "Usage: %s [-t|-T] -n [DeviceName] -c [ioctl_code ...]\n", exe);
-	fprintf(stderr, "   -t: timeout(milliseconds)\n");
-	fprintf(stderr, "   -T: Threads Count\n");
+	fprintf(stderr, "Usage: %s [options] -n [DeviceName] -c [ioctl_code ...]\n", exe);
 	fprintf(stderr, "   -n: DeviceName (without \"\\\\.\\\")\n");
 	fprintf(stderr, "   -c: ioctl codes\n");
 }
 
-//#define DeviceNameLen(x) ((strlen("\\\\.\\") + strlen(x) + 1) * 2);
-uint32 GetIOCTLOpt(int argc, char** argv, LPWSTR *DeviceName, uint32 *ioctl_code_list, DWORD *timeout, uint32 *threads_count)
+uint32 GetIOCTLOpt(int argc, char** argv, LPWSTR *DeviceName, uint32 *ioctl_code_list)
 {
+	int c;
 	size_t DeviceNamelen = 0;
 	uint32 index = 0;
 	uint32 tmp;
-	int c;
 
-	while ((c = getopt(argc, argv, "n:c:t:T")) != -1)
+	while ((c = getopt(argc, argv, "n:c")) != -1)
 	{
 		switch (c)
 		{
 		case 'n':
 			DeviceNamelen = ((MultiByteToWideChar(CP_ACP, 0, "\\\\.\\", -1, NULL, 0) - 1) * 2);
-			DeviceNamelen += ((MultiByteToWideChar(CP_ACP, 0, optarg, -1, NULL, 0))* 2);
+			DeviceNamelen += ((MultiByteToWideChar(CP_ACP, 0, optarg, -1, NULL, 0)) * 2);
 			if (0x100 < DeviceNamelen) return False;
 			*DeviceName = (LPWSTR)malloc(DeviceNamelen);
 			if (*DeviceName == NULL) return Error;
@@ -261,14 +209,6 @@ uint32 GetIOCTLOpt(int argc, char** argv, LPWSTR *DeviceName, uint32 *ioctl_code
 				ioctl_code_list++;
 				index++;
 			}
-			break;
-		case 't':
-			tmp = strtol(optarg, NULL, 10);
-			*timeout = (DWORD)(tmp != 0) ? tmp : 3000;
-			break;
-		case 'T':
-			tmp = strtol(optarg, NULL, 10);
-			*threads_count = (tmp != 0) ? tmp : 5;
 			break;
 		default:
 			puts("Error.");
