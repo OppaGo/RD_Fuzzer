@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RD_Test_Driver.c" />
+    <ClCompile Include="RD_Test_Driver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RD_Test_Driver.h" />
