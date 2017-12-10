@@ -98,7 +98,7 @@ namespace RD_FUZZER
 				return(false);
 			}
 			mutated_file = mutated_file_list[GenRandomValue(file_count)];
-			mutated_full_path = target_program + program_option + " \"" + mutated_path + "\\" + mutated_file + "\"";
+			mutated_full_path = /* target_program + */program_option + " \"" + mutated_path + "\\" + mutated_file + "\"";
 			cout << "[+] Selected mutated File Name : " << mutated_file << endl;
 			//cout << "[+] CMD : " << target_program << " " << mutated_file << endl;
 

@@ -53,7 +53,7 @@ namespace RD_FUZZER
 					char** dummy = NULL;
 					if (!strcmp(m[1].str().c_str(), "orig_path")) orig_path = m[2].str();
 					else if (!strcmp(m[1].str().c_str(), "mutated_path")) mutated_path = m[2].str();
-					else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = strtoul(m[2].str().c_str(), dummy, 10);
+					else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = atoi(m[2].str().c_str());
 				}
 			}
 

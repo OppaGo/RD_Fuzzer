@@ -52,12 +52,14 @@ ret_count:
 	return(fcount);
 }
 
-dword RD_FUZZER::NET_FUZZ::ReadPacketFile(char * data, dword list_select)
+dword RD_FUZZER::NET_FUZZ::ReadPacketFile(char ** data, dword list_select)
 {
 	FILE* fp;
 	dword data_len = 0;
+	char file_name[MAX_PATH] = { 0, };
 
-	fopen_s(&fp, orig_file_list[list_select].c_str(), "rb");
+	sprintf_s(file_name, "%s\\%s", orig_path.c_str(), orig_file_list[list_select].c_str());
+	fopen_s(&fp, file_name, "rb");
 	if (fp == NULL) {
 		fprintf(stderr, "[-] for Fuzzing fopen_s() Error\n");
 		return 0;
@@ -67,13 +69,13 @@ dword RD_FUZZER::NET_FUZZ::ReadPacketFile(char * data, dword list_select)
 	data_len = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
 
-	data = new char[data_len + dummy_size_max];
-	if (fread_s(data, data_len + dummy_size_max, 1, data_len, fp) != data_len)
+	*data = new char[data_len + dummy_size_max];
+	if (fread_s(*data, data_len + dummy_size_max, 1, data_len, fp) != data_len)
 	{
 		fprintf(stderr, "[-] packet data read error\n");
 
-		delete data;
-		data = NULL;
+		delete *data;
+		*data = NULL;
 		
 		return 0;
 	}
@@ -115,7 +117,7 @@ bool RD_FUZZER::NET_FUZZ::InitConfigbyFile(const char * config_file)
 			memset(fdata, 0, BUF_SIZE);
 			ifs.getline(fdata, BUF_SIZE);
 
-			regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+			regex reg("^(\\w+?): ([\\w:\\\\ ()._]+)");
 			string fdata_str = fdata;
 			smatch m;
 
@@ -124,7 +126,7 @@ bool RD_FUZZER::NET_FUZZ::InitConfigbyFile(const char * config_file)
 			if (ismatched) {
 				char** dummy = NULL;
 				if (!strcmp(m[1].str().c_str(), "orig_path")) orig_path = m[2].str();
-				else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = strtoul(m[2].str().c_str(), dummy, 10);
+				else if (!strcmp(m[1].str().c_str(), "dummy_size")) dummy_size_max = atoi(m[2].str().c_str());
 			}
 		}
 
@@ -163,12 +165,13 @@ void RD_FUZZER::NET_FUZZ::NetFuzzing()
 {
 	char* data = NULL;
 	dword data_len = 0;
-	dword file_count = 0;
+	static dword file_count = 0;
 
 	if (orig_file_list == NULL)
 		file_count = GetFileList();
 
-	data_len = ReadPacketFile(data, mutator.GenRandomValue_extern(file_count));
+	printf("%u\n", file_count);
+	data_len = ReadPacketFile(&data, mutator.GenRandomValue_extern(file_count));
 	if (data_len == 0) return;
 
 	printf("[+] Original Packet\n");

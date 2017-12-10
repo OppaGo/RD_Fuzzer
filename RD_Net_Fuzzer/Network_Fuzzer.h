@@ -13,7 +13,7 @@ namespace RD_FUZZER
 		dword dummy_size_max;
 
 		dword GetFileList();
-		dword ReadPacketFile(char* data, dword list_select);
+		dword ReadPacketFile(char** data, dword list_select);
 
 	protected:
 		Mutator mutator;

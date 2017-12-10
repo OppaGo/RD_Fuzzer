@@ -29,7 +29,7 @@ namespace RD_FUZZER
 				memset(fdata, 0, BUF_SIZE);
 				ifs.getline(fdata, BUF_SIZE);
 
-				std::regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+				std::regex reg("^(\\w+?): ([\\w:\\\\ ().]+)");
 				std::string fdata_str = fdata;
 				std::smatch m;
 
@@ -304,7 +304,7 @@ namespace RD_FUZZER
 
 		servaddr.sin_family = AF_INET;
 		servaddr.sin_port = htons((uint16)tcp_port_rdp);
-
+		
 		if (connect(
 			sock,
 			(struct sockaddr *) &servaddr,

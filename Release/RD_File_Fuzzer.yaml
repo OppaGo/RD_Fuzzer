@@ -16,8 +16,8 @@ orig_path: .\Original
 mutated_path: .\Mutated
 result_path: .\Result
 
-target_program: C:\RD_Fuzzer\Hello.exe
-program_option: 
+target_program: C:\Program Files (x86)\TeamViewer\TeamViewer.exe
+program_option: --play
 
 timeout: 5
 test_count: 5

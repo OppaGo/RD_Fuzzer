@@ -31,7 +31,8 @@ RD_SNIFFER_API PSniffer OpenSniffer()
 {
 	RD_FUZZER::RD_SNIFFER *rd_sniffer = new RD_FUZZER::RD_SNIFFER();
 
-	rd_sniffer->OpenSniff(NULL, true);
+	//rd_sniffer->OpenSniff(NULL, true);
+	rd_sniffer->OpenSniff("VMnet8", false);
 	return rd_sniffer;
 }
 
@@ -101,16 +102,16 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvRe
 	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		printf("[+] DLL is attached process\n");
+		//printf("[+] DLL is attached process\n");
 		break;
 	case DLL_PROCESS_DETACH:
-		printf("[+] DLL is dettached process\n");
+		//printf("[+] DLL is dettached process\n");
 		break;
 	case DLL_THREAD_ATTACH:
-		printf("[+] DLL is Attached thread\n");
+		//printf("[+] DLL is Attached thread\n");
 		break;
 	case DLL_THREAD_DETACH:
-		printf("[+] DLL is dettached thread\n");
+		//printf("[+] DLL is dettached thread\n");
 		break;
 	}
 

@@ -51,7 +51,7 @@ namespace RD_FUZZER
 				memset(fdata, 0, BUF_SIZE);
 				ifs.getline(fdata, BUF_SIZE);
 
-				regex reg("^(\\w+?): ([\\w:\\\\ ().]+)");
+				regex reg("^(\\w+?): ([-\\w:\\\\ ().]+)");
 				string fdata_str = fdata;
 				smatch m;
 
@@ -59,7 +59,7 @@ namespace RD_FUZZER
 
 				if (ismatched) {
 					if (!strcmp(m[1].str().c_str(), "target_program")) target_program = m[2].str();
-					else if (!strcmp(m[1].str().c_str(), "program_option")) program_option = " \"" + m[2].str() + "\" ";
+					else if (!strcmp(m[1].str().c_str(), "program_option")) program_option = m[2].str();
 				}
 			}
 

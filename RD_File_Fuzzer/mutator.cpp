@@ -42,7 +42,7 @@ namespace RD_FUZZER
 				memset(fdata, 0, BUF_SIZE);
 				ifs.getline(fdata, BUF_SIZE);
 
-				regex reg("^(\\w+?): ([\\w:\\\\ ()]+)");
+				regex reg("^(\\w+?): ([\\w:\\\\ ().]+)");
 				string fdata_str = fdata;
 				smatch m;
 

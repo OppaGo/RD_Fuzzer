@@ -1,12 +1,14 @@
 #ifndef _SSL_H
 #define _SSL_H
 
-#include <openssl/rc4.h>
-#include <openssl/md5.h>
-#include <openssl/sha.h>
-#include <openssl/bn.h>
-#include <openssl/x509v3.h>
+#include <openssl\rc4.h>
+#include <openssl\md5.h>
+#include <openssl\sha.h>
+#include <openssl\bn.h>
+#include <openssl\x509v3.h>
 
+#pragma comment(lib, "libeay32.lib")
+#pragma comment(lib, "ssleay32.lib")
 #include "rdesktop.h"
 
 #if defined(OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090800f)
